@@ -37,6 +37,7 @@ with tab2:
 if uploaded_file is not None:
     content = uploaded_file.getvalue().decode("utf-8")
     st.session_state.messages = json.loads(content)
+    st.sidebar.error('''Select (×) to unmount JSON to continue using the application''')
 
 # Display only user and assistant messages to the end user
 for message in st.session_state.messages:
