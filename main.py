@@ -1,15 +1,41 @@
 from openai import OpenAI
 import streamlit as st
+from datetime import datetime
+import json
 
 st.markdown("### Local LLM Custom Front-End")
 
 client = OpenAI(base_url="http://144.172.137.100:1234/v1", api_key="not-needed")
+
+tab1, tab2 = st.sidebar.tabs(['Instructions', 'Save Conversation'])
 
 if "openai_model" not in st.session_state:
     st.session_state["openai_model"] = "llama2"
 
 if "messages" not in st.session_state:
     st.session_state.messages = []
+
+# Sidebar section for session state download
+def download_session_state():
+    session_state_json = json.dumps(st.session_state.messages, indent=2)
+    session_state_bytes = session_state_json.encode("utf-8")
+
+    st.download_button(
+            label="Save Conversation (JSON)",
+            data=session_state_bytes,
+            file_name=f"{datetime.today().strftime('%Y-%m-%d')}.json",
+            key="download_session_state",)
+
+with tab2:
+    download_session_state()
+    # Sidebar section for file upload
+    uploaded_file = st.file_uploader("Upload Past Conversations(JSON)", type=["json"])
+
+
+
+if uploaded_file is not None:
+    content = uploaded_file.getvalue().decode("utf-8")
+    st.session_state.messages = json.loads(content)
 
 # Display only user and assistant messages to the end user
 for message in st.session_state.messages:
@@ -18,12 +44,18 @@ for message in st.session_state.messages:
             st.markdown(message["content"])
 
 # Reinforce special instructions every time the user enters a message
-user_instructions = st.sidebar.text_area("Enter Specific Instructions:", "")
+
+with tab1:
+    user_instructions = st.text_area("Enter Specific Instructions:", "")
+
 if user_instructions:
     st.session_state.messages.append({"role": "system", "content": user_instructions})
 
 # "Delete Last Generated Message" button
-if st.sidebar.button("Delete Last Generated Message"):
+with tab1:
+    deleteButton = st.button("Delete Last Generated Message")
+
+if deleteButton:
     # Find the index of the last assistant message
     last_assistant_index = None
     for i, message in enumerate(reversed(st.session_state.messages)):
@@ -35,8 +67,8 @@ if st.sidebar.button("Delete Last Generated Message"):
     if last_assistant_index is not None:
         st.session_state.messages.pop(last_assistant_index)
 
-    # Use st.experimental_rerun to force a rerun of the app
-    st.experimental_rerun()
+    # Use st.rerun to force a rerun of the app
+    st.rerun()
 
 if prompt := st.chat_input("What is up?"):
     st.session_state.messages.append({"role": "user", "content": prompt})
@@ -63,3 +95,4 @@ if prompt := st.chat_input("What is up?"):
             st.session_state.messages.append({"role": "system", "content": user_instructions})
 
     st.session_state.messages.append({"role": "assistant", "content": full_response})
+    st.rerun()
