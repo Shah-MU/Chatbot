@@ -71,7 +71,7 @@ if deleteButton:
     # Use st.rerun to force a rerun of the app
     st.rerun()
 
-if prompt := st.chat_input("What is up?"):
+if prompt := st.chat_input("Enter To Start Chat"):
     st.session_state.messages.append({"role": "user", "content": prompt})
     with st.chat_message("user"):
         st.markdown(prompt)
