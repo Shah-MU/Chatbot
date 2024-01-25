@@ -3,6 +3,13 @@ import streamlit as st
 from datetime import datetime
 import json
 
+
+st.set_page_config(
+    page_title="Chatbot",
+    page_icon="🤖",  # Open book icon
+    layout="wide",  # Set the layout to wide
+)
+
 st.markdown("### Local LLM Custom Front-End")
 st.markdown("*Using a local install of Llama2*")
 
