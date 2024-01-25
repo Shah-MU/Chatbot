@@ -13,7 +13,7 @@ st.set_page_config(
 st.markdown("### Local LLM Custom Front-End")
 st.markdown("*Using a local install of Llama2*")
 
-client = OpenAI(base_url="http://144.172.137.100:1234/v1", api_key="not-needed")
+client = OpenAI(base_url=st.secrets(['LLM']), api_key="not-needed")
 
 tab1, tab2 = st.sidebar.tabs(['Instructions', 'Save Conversation'])
 
