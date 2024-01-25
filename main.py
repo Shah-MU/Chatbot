@@ -3,7 +3,6 @@ import streamlit as st
 from datetime import datetime
 import json
 
-
 st.set_page_config(
     page_title="Chatbot",
     page_icon="🤖",  # Open book icon
@@ -11,9 +10,9 @@ st.set_page_config(
 )
 
 st.markdown("### Local LLM Custom Front-End")
-st.markdown("*Using a local install of Llama2*")
+st.markdown("*Using a local install of Llama2")
 
-client = OpenAI(base_url=st.secrets(['LLM']), api_key="not-needed")
+client = OpenAI(base_url=st.secrets["LLM"], api_key="not-needed")
 
 tab1, tab2 = st.sidebar.tabs(['Instructions', 'Save Conversation'])
 
@@ -29,17 +28,16 @@ def download_session_state():
     session_state_bytes = session_state_json.encode("utf-8")
 
     st.download_button(
-            label="Save Conversation (JSON)",
-            data=session_state_bytes,
-            file_name=f"{datetime.today().strftime('%Y-%m-%d')}.json",
-            key="download_session_state",)
+        label="Save Conversation (JSON)",
+        data=session_state_bytes,
+        file_name=f"{datetime.today().strftime('%Y-%m-%d')}.json",
+        key="download_session_state",
+    )
 
 with tab2:
     download_session_state()
     # Sidebar section for file upload
     uploaded_file = st.file_uploader("Upload Past Conversations(JSON)", type=["json"])
-
-
 
 if uploaded_file is not None:
     content = uploaded_file.getvalue().decode("utf-8")
@@ -47,37 +45,23 @@ if uploaded_file is not None:
     st.sidebar.error('''Select (×) to unmount JSON to continue using the application''')
 
 # Display only user and assistant messages to the end user
-for message in st.session_state.messages:
+for idx, message in enumerate(st.session_state.messages):
     if message["role"] in ["user", "assistant"]:
         with st.chat_message(message["role"]):
             st.markdown(message["content"])
+            # Add a button to delete the last message
+            if st.button(f"🗑️", key=f"delete_{message['role']}_{idx}"):
+                st.session_state.messages.pop(idx)
+                st.rerun()
 
 # Reinforce special instructions every time the user enters a message
-
 with tab1:
     user_instructions = st.text_area("Enter Specific Instructions:", "")
 
 if user_instructions:
     st.session_state.messages.append({"role": "system", "content": user_instructions})
 
-# "Delete Last Generated Message" button
-with tab1:
-    deleteButton = st.button("Delete Last Generated Message")
 
-if deleteButton:
-    # Find the index of the last assistant message
-    last_assistant_index = None
-    for i, message in enumerate(reversed(st.session_state.messages)):
-        if message["role"] == "assistant":
-            last_assistant_index = len(st.session_state.messages) - 1 - i
-            break
-
-    # Remove the last assistant message if found
-    if last_assistant_index is not None:
-        st.session_state.messages.pop(last_assistant_index)
-
-    # Use st.rerun to force a rerun of the app
-    st.rerun()
 
 if prompt := st.chat_input("Enter To Start Chat"):
     st.session_state.messages.append({"role": "user", "content": prompt})
@@ -88,12 +72,12 @@ if prompt := st.chat_input("Enter To Start Chat"):
         message_placeholder = st.empty()
         full_response = ""
         for response in client.chat.completions.create(
-                model=st.session_state["openai_model"],
-                messages=[
-                    {"role": m["role"], "content": m["content"]}
-                    for m in st.session_state.messages
-                ],
-                stream=True,
+            model=st.session_state["openai_model"],
+            messages=[
+                {"role": m["role"], "content": m["content"]}
+                for m in st.session_state.messages
+            ],
+            stream=True,
         ):
             full_response += (response.choices[0].delta.content or "")
             message_placeholder.markdown(full_response + "▌")
