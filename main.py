@@ -61,7 +61,8 @@ with tab1:
         """
 ### Note: 
 
-To see a fine-tuned version of the above performing a specific task check out this project [here!](https://shah-mu-fxanalysis.streamlit.app/)
+To see a use case of this application which was fine-tuned using embedding
+check out this project [here!](https://shah-mu-fxanalysis.streamlit.app/)
 
 """)
 
