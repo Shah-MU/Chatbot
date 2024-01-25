@@ -57,6 +57,13 @@ for idx, message in enumerate(st.session_state.messages):
 # Reinforce special instructions every time the user enters a message
 with tab1:
     user_instructions = st.text_area("Enter Specific Instructions:", "")
+    st.markdown(
+        """
+### Note: 
+
+To see a fine-tuned version of the above performing a specific task check out this project [here!](https://shah-mu-fxanalysis.streamlit.app/)
+
+""")
 
 if user_instructions:
     st.session_state.messages.append({"role": "system", "content": user_instructions})
