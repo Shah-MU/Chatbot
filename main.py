@@ -62,7 +62,7 @@ with tab1:
 ### Note: 
 
 To see a use case of this application which was fine-tuned using embedding
-check out this project [here!](https://shah-mu-fxanalysis.streamlit.app/)
+check out this project [here!](https://shah-mu-fxanalysis.streamlit.app/Wiki)
 
 """)
 
