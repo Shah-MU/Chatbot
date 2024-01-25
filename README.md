@@ -1,4 +1,6 @@
-# Chatbot with Local LLM Custom Front-End
+# Chatbot with Local LLM Custom Front-End:
+
+**See the app live here!:**  https://shah-mu-chatbot.streamlit.app/
 
 This code implements a Streamlit-based front-end for interacting with a local installation of the Llama2 language model. The application allows users to engage in a conversation with the language model, providing instructions and receiving responses.
 
