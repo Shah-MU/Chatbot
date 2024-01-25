@@ -35,7 +35,7 @@ In the "Save Conversation" tab, you can download the conversation as a JSON file
 
 - The code uses the Streamlit library for creating a user-friendly interface.
 - Messages are stored in the session state to maintain the conversation history.
-- The OpenAI API is accessed through a local Llama2 instance for generating model responses.
+- The OpenAI API is accessed through a local Llama2 instance for generating model responses this can be done throught the use of LocalAI or LMstudio.
 - The application provides an interactive chat interface, allowing users to communicate with the language model.
 
 Feel free to customize the code to fit your specific use case and preferences.
