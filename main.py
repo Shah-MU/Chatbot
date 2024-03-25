@@ -3,13 +3,46 @@ import streamlit as st
 from datetime import datetime
 import json
 
+hide_streamlit_style = """
+                <style>
+                div[data-testid="stToolbar"] {
+                visibility: hidden;
+                height: 0%;
+                position: fixed;
+                }
+                div[data-testid="stDecoration"] {
+                visibility: hidden;
+                height: 0%;
+                position: fixed;
+                }
+                div[data-testid="stStatusWidget"] {
+                visibility: hidden;
+                height: 0%;
+                position: fixed;
+                }
+                #MainMenu {
+                visibility: hidden;
+                height: 0%;
+                }
+                header {
+                visibility: hidden;
+                height: 0%;
+                }
+                footer {
+                visibility: hidden;
+                height: 0%;
+                }
+                </style>
+                """
+
+
 st.set_page_config(
     page_title="Chatbot",
     page_icon="🤖",  # Open book icon
     layout="wide",  # Set the layout to wide
 )
 
-st.markdown("### Local LLM Custom Front-End")
+st.markdown("### AI PET ADVISOR")
 st.markdown("*Using a local install of Llama2*")
 
 client = OpenAI(base_url=st.secrets["LLM"], api_key="not-needed")
@@ -56,13 +89,12 @@ for idx, message in enumerate(st.session_state.messages):
 
 # Reinforce special instructions every time the user enters a message
 with tab1:
-    user_instructions = st.text_area("Enter Specific Instructions:", "")
+    user_instructions = "You are a AI pet Health advisor, ONLY ANSWER QUESTIONS RELATED TO PETS/ANIMALS, if a user asks an unrelated question please tell them that you cannon respond"
     st.markdown(
         """
 ### Note: 
 
-To see a use case of this application which was fine-tuned using embedding
-check out this project [here!](https://shah-mu-fxanalysis.streamlit.app/Wiki)
+This is an AI assistent which can help you understand your pets better!
 
 """)
 
