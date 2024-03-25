@@ -3,6 +3,14 @@ import streamlit as st
 from datetime import datetime
 import json
 
+
+
+st.set_page_config(
+    page_title="Chatbot",
+    page_icon="🤖",  # Open book icon
+    layout="wide",  # Set the layout to wide
+)
+
 hide_streamlit_style = """
                 <style>
                 div[data-testid="stToolbar"] {
@@ -35,12 +43,6 @@ hide_streamlit_style = """
                 </style>
                 """
 
-
-st.set_page_config(
-    page_title="Chatbot",
-    page_icon="🤖",  # Open book icon
-    layout="wide",  # Set the layout to wide
-)
 
 st.markdown("### AI PET ADVISOR")
 st.markdown("*Using a local install of Llama2*")
