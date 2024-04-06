@@ -47,6 +47,22 @@ hide_streamlit_style = """
 st.markdown("### AI PET ADVISOR")
 st.markdown("*Using a local install of Llama2*")
 
+# Initialize Firebase app
+if not firebase_admin._apps:
+    # Initialize Firebase app
+    cred = credentials.Certificate("sprint1-dataflow-test-firebase-adminsdk-j3s7u-7ad4f76319.json")
+    firebase_admin.initialize_app(cred, {
+        'databaseURL': 'https://sprint1-dataflow-test-default-rtdb.firebaseio.com/'
+    })
+
+# Firebase reference
+ref = db.reference('pet_info')
+pet_info = ref.get()
+
+st.write(pet_info.get('pet_string'))
+
+
+
 client = OpenAI(base_url=st.secrets["LLM"], api_key="not-needed")
 
 tab1, tab2 = st.sidebar.tabs(['Instructions', 'Save Conversation'])
