@@ -60,8 +60,8 @@ if not firebase_admin._apps:
 # Firebase reference
 ref = db.reference('pet_info')
 pet_info = ref.get()
+prompt = pet_info.get('pet_string')
 
-st.write(pet_info.get('pet_string'))
 
 
 
@@ -109,7 +109,7 @@ for idx, message in enumerate(st.session_state.messages):
 
 # Reinforce special instructions every time the user enters a message
 with tab1:
-    user_instructions = "You are a AI pet Health advisor, ONLY ANSWER QUESTIONS RELATED TO PETS/ANIMALS, if a user asks an unrelated question please tell them that you cannon respond"
+    user_instructions = f"You are a AI pet Health advisor, ONLY ANSWER QUESTIONS RELATED TO PETS/ANIMALS, if a user asks an unrelated question please tell them that you cannot respond, Here is some info about the user's pet: User: {prompt}"
     st.markdown(
         """
 ### Note: 
