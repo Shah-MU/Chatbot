@@ -67,7 +67,7 @@ prompt = pet_info.get('pet_string')
 
 client = OpenAI(base_url=st.secrets["LLM"], api_key="not-needed")
 
-tab1 = st.sidebar.tabs(['Instructions'])
+tab1, tab2 = st.sidebar.tabs(['Instructions', 'Save Conversation'])
 
 if "openai_model" not in st.session_state:
     st.session_state["openai_model"] = "llama2"
@@ -75,27 +75,27 @@ if "openai_model" not in st.session_state:
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
-# # Sidebar section for session state download
-# def download_session_state():
-#     session_state_json = json.dumps(st.session_state.messages, indent=2)
-#     session_state_bytes = session_state_json.encode("utf-8")
+# Sidebar section for session state download
+def download_session_state():
+    session_state_json = json.dumps(st.session_state.messages, indent=2)
+    session_state_bytes = session_state_json.encode("utf-8")
 
-#     st.download_button(
-#         label="Save Conversation (JSON)",
-#         data=session_state_bytes,
-#         file_name=f"{datetime.today().strftime('%Y-%m-%d')}.json",
-#         key="download_session_state",
-#     )
+    st.download_button(
+        label="Save Conversation (JSON)",
+        data=session_state_bytes,
+        file_name=f"{datetime.today().strftime('%Y-%m-%d')}.json",
+        key="download_session_state",
+    )
 
-# with tab2:
-#     download_session_state()
-#     # Sidebar section for file upload
-#     uploaded_file = st.file_uploader("Upload Past Conversations(JSON)", type=["json"])
+with tab2:
+    download_session_state()
+    # Sidebar section for file upload
+    uploaded_file = st.file_uploader("Upload Past Conversations(JSON)", type=["json"])
 
-# if uploaded_file is not None:
-#     content = uploaded_file.getvalue().decode("utf-8")
-#     st.session_state.messages = json.loads(content)
-#     st.sidebar.error('''Select (×) to unmount JSON to continue using the application''')
+if uploaded_file is not None:
+    content = uploaded_file.getvalue().decode("utf-8")
+    st.session_state.messages = json.loads(content)
+    st.sidebar.error('''Select (×) to unmount JSON to continue using the application''')
 
 # Display only user and assistant messages to the end user
 for idx, message in enumerate(st.session_state.messages):
