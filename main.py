@@ -67,7 +67,7 @@ prompt = pet_info.get('pet_string')
 
 client = OpenAI(base_url=st.secrets["LLM"], api_key="not-needed")
 
-tab1, tab2 = st.sidebar.tabs(['Instructions', 'Save Conversation'])
+tab1 = st.sidebar.tabs(['Instructions'])
 
 if "openai_model" not in st.session_state:
     st.session_state["openai_model"] = "llama2"
@@ -87,10 +87,10 @@ def download_session_state():
         key="download_session_state",
     )
 
-with tab2:
-    download_session_state()
-    # Sidebar section for file upload
-    uploaded_file = st.file_uploader("Upload Past Conversations(JSON)", type=["json"])
+# with tab2:
+#     download_session_state()
+#     # Sidebar section for file upload
+#     uploaded_file = st.file_uploader("Upload Past Conversations(JSON)", type=["json"])
 
 if uploaded_file is not None:
     content = uploaded_file.getvalue().decode("utf-8")
