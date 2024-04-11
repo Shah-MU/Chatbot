@@ -56,7 +56,7 @@ for idx, message in enumerate(st.session_state.messages):
 
 with st.sidebar:
     st.markdown("### Instructions")
-    st.write("You are an AI pet Health advisor. Only answer questions related to pets/animals. If a user asks an unrelated question, please tell them that you cannot respond.")
+    st.write("This AI Assistant has been fine tuned on your pet's needs. Feel free to ask it about any concerns you may have about you pet!")
 
 st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
