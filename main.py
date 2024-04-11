@@ -92,10 +92,10 @@ if "messages" not in st.session_state:
 #     # Sidebar section for file upload
 #     uploaded_file = st.file_uploader("Upload Past Conversations(JSON)", type=["json"])
 
-if uploaded_file is not None:
-    content = uploaded_file.getvalue().decode("utf-8")
-    st.session_state.messages = json.loads(content)
-    st.sidebar.error('''Select (×) to unmount JSON to continue using the application''')
+# if uploaded_file is not None:
+#     content = uploaded_file.getvalue().decode("utf-8")
+#     st.session_state.messages = json.loads(content)
+#     st.sidebar.error('''Select (×) to unmount JSON to continue using the application''')
 
 # Display only user and assistant messages to the end user
 for idx, message in enumerate(st.session_state.messages):
