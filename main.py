@@ -55,7 +55,8 @@ for idx, message in enumerate(st.session_state.messages):
                 st.rerun()
 
 with st.sidebar:
-    st.markdown(hide_streamlit_style, unsafe_allow_html=True)
+    st.markdown("### Instructions")
+    st.write("You are an AI pet Health advisor. Only answer questions related to pets/animals. If a user asks an unrelated question, please tell them that you cannot respond.")
 
 st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
