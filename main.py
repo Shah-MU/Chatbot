@@ -75,17 +75,17 @@ if "openai_model" not in st.session_state:
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
-# Sidebar section for session state download
-def download_session_state():
-    session_state_json = json.dumps(st.session_state.messages, indent=2)
-    session_state_bytes = session_state_json.encode("utf-8")
+# # Sidebar section for session state download
+# def download_session_state():
+#     session_state_json = json.dumps(st.session_state.messages, indent=2)
+#     session_state_bytes = session_state_json.encode("utf-8")
 
-    st.download_button(
-        label="Save Conversation (JSON)",
-        data=session_state_bytes,
-        file_name=f"{datetime.today().strftime('%Y-%m-%d')}.json",
-        key="download_session_state",
-    )
+#     st.download_button(
+#         label="Save Conversation (JSON)",
+#         data=session_state_bytes,
+#         file_name=f"{datetime.today().strftime('%Y-%m-%d')}.json",
+#         key="download_session_state",
+#     )
 
 # with tab2:
 #     download_session_state()
