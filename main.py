@@ -50,7 +50,9 @@ for idx, message in reversed(list(enumerate(st.session_state.messages))):
     if message["role"] in ["user", "assistant"]:
         with st.chat_message(message["role"]):
             st.markdown(message["content"])
-            if st.button(f"🗑️", key=f"delete_{message['role']}_{idx}"):
+            # Generate a unique key for each delete button
+            delete_button_key = f"delete_{message['role']}_{idx}_{message['content']}"
+            if st.button(f"🗑️", key=delete_button_key):
                 st.session_state.messages.pop(idx)
                 st.rerun()
 
@@ -88,10 +90,4 @@ if prompt := st.chat_input("Enter To Start Chat"):
         ):
             full_response += (response.choices[0].delta.content or "")
             message_placeholder.markdown(full_response + "▌")
-        message_placeholder.markdown(full_response)
-
-        if user_instructions:
-            st.session_state.messages.append({"role": "system", "content": user_instructions})
-
-    st.session_state.messages.append({"role": "assistant", "content": full_response})
-    st.rerun()
+        message_placeholder.markdown(ful
