@@ -46,7 +46,7 @@ if "openai_model" not in st.session_state:
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
-for idx, message in enumerate(st.session_state.messages):
+for idx, message in reversed(list(enumerate(st.session_state.messages))):
     if message["role"] in ["user", "assistant"]:
         with st.chat_message(message["role"]):
             st.markdown(message["content"])
@@ -56,7 +56,7 @@ for idx, message in enumerate(st.session_state.messages):
 
 with st.sidebar:
     st.markdown("### Instructions")
-    st.write("This AI Assistant has been fine tuned on your pet's needs. Feel free to ask it about any concerns you may have about you pet!")
+    st.write("This AI Assistant has been fine-tuned on your pet's needs. Feel free to ask it about any concerns you may have about your pet!")
 
 st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
